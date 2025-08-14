@@ -2,48 +2,49 @@ pipeline {
     agent any
 
     stages {
-        stage('Git Clone') {
+        
+        stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/manishaacharya111/Project3-Hotstar-Clone.git'
+                git branch: 'main', url: 'https://github.com/swapie2212/Project3-Hotstar-Clone.git'
             }
         }
-        
-        stage('Terraform Version Check') {
+
+		stage('Terraform Check') {
             steps {
                 sh 'terraform --version'
             }
         }
         
-        stage('Terraform Initialize') {
+		stage('Terraform initialize') {
             steps {
-                dir('EKS_TERRAFORM') {
-                    sh 'terraform init'
-                }
-            }
+                dir('EKS_TERRAFORM'){
+				sh 'terraform init'
+				}
+			}
         }
-        
-        stage('Terraform Validate') {
+
+		stage('Terraform validate') {
             steps {
-                dir('EKS_TERRAFORM') {
-                    sh 'terraform validate'
-                }
-            }
+                dir('EKS_TERRAFORM'){
+				sh 'terraform validate'
+				}
+			}
         }
-        
-        stage('Terraform Plan') {
+
+		stage('Terraform plan') {
             steps {
-                dir('EKS_TERRAFORM') {
-                    sh 'terraform plan'
-                }
-            }
+                dir('EKS_TERRAFORM'){
+				sh 'terraform plan'
+				}
+			}
         }
-        
-        stage('Terraform Apply/Destroy') {
+
+		stage('Terraform apply/destroy') {
             steps {
-                dir('EKS_TERRAFORM') {
-                    sh 'terraform ${Action} --auto-approve'
-                }
-            }
+                dir('EKS_TERRAFORM'){
+				sh 'terraform ${Action} -auto-approve'
+				}
+			}
         }
     }
 }
